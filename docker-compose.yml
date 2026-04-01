@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # Backend Container (Python 3.11 inside)
+  backend:
+    build: ./backend
+    container_name: k-c-go-backend
+    restart: always
+    environment:
+      - DATABASE_URL=sqlite:///./app_data/community.db # Default is SQLite
+      # - DATABASE_URL=mysql+pymysql://user:pass@host/dbname
+      - SECRET_KEY=your_secure_secret_key_here
+    volumes:
+      - ./backend/data:/app/app_data # Persist SQLite database
+    ports:
+      - "8000:8000"
+
+  # Frontend Container (Nginx)
+  frontend:
+    build: ./frontend
+    container_name: k-c-go-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

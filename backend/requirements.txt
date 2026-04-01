@@ -1,0 +1,23 @@
+# K-C-go Backend Requirements - Legacy Support for Python 3.6
+# -----------------------------------------------------------
+
+# Framework
+fastapi==0.68.2
+uvicorn[standard]==0.15.0
+gunicorn==20.1.0
+
+# Database
+sqlalchemy==1.4.30
+pydantic==1.8.2
+pymysql==1.0.2
+redis==3.5.3
+
+# Auth & Security
+PyJWT==2.1.0
+passlib[bcrypt]==1.7.4
+bcrypt==3.2.0
+python-multipart==0.0.5
+
+# Utilities
+python-dotenv==0.19.2
+typing-extensions>=3.10.0

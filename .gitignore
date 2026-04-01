@@ -1,0 +1,38 @@
+# IDE
+.idea/
+.vscode/
+.zed/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Env
+.env
+
+# Logs
+logs/
+
+# Build
+build/
+dist/
+
+# DB
+*.db
+*.db-journal
+
+# Node
+node_modules/
+web/dist/
+
+# OS
+.DS_Store
+
+# Cache
+.cache/
+.eslintcache
+
+# Others
+upload/
+*.exe
