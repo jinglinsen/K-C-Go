@@ -3,9 +3,12 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Upgrade pip and install dependencies
+# Copy requirements first to leverage Docker layer cache
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Python dependencies (no C compilation needed)
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 
 # Copy the rest of the backend code
 COPY . .

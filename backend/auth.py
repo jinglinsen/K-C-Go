@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta
-from typing import Optional, Union
+from typing import Optional, Union # Optional is fine for 3.6 to 3.12
 import jwt
 from jwt.exceptions import InvalidTokenError
 import bcrypt
@@ -21,6 +21,7 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
+# Using Optional for compatibility across most Python versions (3.6 to 3.12+)
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:

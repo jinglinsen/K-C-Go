@@ -2,7 +2,7 @@
 .idea/
 .vscode/
 .zed/
-
+.md
 # Python
 venv/
 __pycache__/
@@ -25,7 +25,7 @@ dist/
 # Node
 node_modules/
 web/dist/
-
+.bat
 # OS
 .DS_Store
 

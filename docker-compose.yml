@@ -1,19 +1,38 @@
 version: '3.8'
 
 services:
-  # Backend Container (Python 3.11 inside)
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: k-c-go-db
+    restart: always
+    environment:
+      POSTGRES_USER: kcgo
+      POSTGRES_PASSWORD: kcgoroot
+      POSTGRES_DB: kcgo_community
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kcgo -d kcgo_community"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Backend Container (Python 3.11)
   backend:
     build: ./backend
     container_name: k-c-go-backend
     restart: always
     environment:
-      - DATABASE_URL=sqlite:///./app_data/community.db # Default is SQLite
-      # - DATABASE_URL=mysql+pymysql://user:pass@host/dbname
+      - DATABASE_URL=postgresql://kcgo:kcgo123@db:5432/kcgo_community
       - SECRET_KEY=your_secure_secret_key_here
-    volumes:
-      - ./backend/data:/app/app_data # Persist SQLite database
     ports:
       - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
 
   # Frontend Container (Nginx)
   frontend:
@@ -24,3 +43,6 @@ services:
       - "80:80"
     depends_on:
       - backend
+
+volumes:
+  pgdata:
